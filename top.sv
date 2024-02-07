@@ -177,7 +177,7 @@ paddle_inst_p1
 
     paddle #( 
 
- .HRES      (0),
+ .HRES      (HRES),
  .VRES      (VRES),
  .PADDLE_W  (PADDLE_W),
  .PADDLE_H  (PADDLE_H),
