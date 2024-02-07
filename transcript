@@ -1,0 +1,20 @@
+# Compile of hdmi_transmit.sv was successful.
+# Compile of object.sv failed with 1 errors.
+# Compile of paddle.sv was successful with warnings.
+# Compile of tmds_encode.v was successful.
+# Compile of tmds_oserdes.v was successful.
+# Compile of top.sv was successful.
+# 6 compiles, 1 failed with 1 error.
+# Compile of object.sv failed with 1 errors.
+# Compile of object.sv failed with 1 errors.
+# Compile of scoreboard.sv was successful.
+# 2 compiles, 1 failed with 1 error.
+# Compile of object.sv was successful.
+# Compile of hdmi_transmit.sv was successful.
+# Compile of object.sv was successful.
+# Compile of paddle.sv was successful with warnings.
+# Compile of tmds_encode.v was successful.
+# Compile of tmds_oserdes.v was successful.
+# Compile of top.sv was successful.
+# Compile of scoreboard.sv was successful.
+# 7 compiles, 0 failed with no errors.

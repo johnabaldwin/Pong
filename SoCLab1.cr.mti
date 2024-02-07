@@ -1,0 +1,39 @@
+C:/Users/John/Documents/School/SoC/Lab1/Lab1/Project_Code/tmds_oserdes.v {1 {vlog -work work -stats=none C:/Users/John/Documents/School/SoC/Lab1/Lab1/Project_Code/tmds_oserdes.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module tmds_oserdes
+
+Top level modules:
+	tmds_oserdes
+
+} {} {}} C:/Users/John/Documents/School/SoC/Lab1/Lab1/Project_Code/tmds_encode.v {1 {vlog -work work -stats=none C:/Users/John/Documents/School/SoC/Lab1/Lab1/Project_Code/tmds_encode.v
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module tmds_encode
+
+Top level modules:
+	tmds_encode
+
+} {} {}} C:/Users/John/Documents/School/SoC/Lab1/Lab1/Project_Code/paddle.sv {2 {vlog -work work -sv -stats=none C:/Users/John/Documents/School/SoC/Lab1/Lab1/Project_Code/paddle.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module paddle
+** Warning: C:/Users/John/Documents/School/SoC/Lab1/Lab1/Project_Code/paddle.sv(36): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+** Warning: C:/Users/John/Documents/School/SoC/Lab1/Lab1/Project_Code/paddle.sv(37): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+** Warning: C:/Users/John/Documents/School/SoC/Lab1/Lab1/Project_Code/paddle.sv(38): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+
+Top level modules:
+	paddle
+
+} {} {}} C:/Users/John/Documents/School/SoC/Lab1/Lab1/Project_Code/object.sv {1 {vlog -work work -sv -stats=none C:/Users/John/Documents/School/SoC/Lab1/Lab1/Project_Code/object.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module object
+
+Top level modules:
+	object
+
+} {} {}} C:/Users/John/Documents/School/SoC/Lab1/Lab1/Project_Code/hdmi_transmit.sv {1 {vlog -work work -sv -stats=none C:/Users/John/Documents/School/SoC/Lab1/Lab1/Project_Code/hdmi_transmit.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module hdmi_transmit
+
+Top level modules:
+	hdmi_transmit
+
+} {} {}}
