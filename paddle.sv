@@ -96,8 +96,8 @@ begin
     if (rst) begin 
         /* Insert values to reset here */
         
-        lhpos <= HRES - PADDLE_W/2;
-        rhpos <= HRES + PADDLE_W/2;
+        lhpos <= HRES/2 - PADDLE_W/2;
+        rhpos <= HRES/2 + PADDLE_W/2;
         // tvpos <= VRES; 
         // bvpos <= VRES + PADDLE_H;
         tvpos <= VTOP; 
