@@ -1,8 +1,8 @@
 module paddle #( 
 
+parameter VTOP = 0,
 parameter HRES = 1280,
 parameter VRES = 720,
-
 
 parameter PADDLE_W = 200,
 parameter PADDLE_H = 20,
@@ -100,8 +100,8 @@ begin
         rhpos <= 0 + PADDLE_W;
         // tvpos <= VRES; 
         // bvpos <= VRES + PADDLE_H;
-        tvpos <= VRES - PADDLE_H; 
-        bvpos <= VRES;
+        tvpos <= VTOP; 
+        bvpos <= VTOP + PADDLE_H;
         
     end else begin 
         if (fsync) begin

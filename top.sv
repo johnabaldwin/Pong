@@ -145,19 +145,16 @@ object_inst
      
       
         
-         paddle #( 
-
- .HRES      (HRES),
- .VRES      (VRES),
- .PADDLE_W  (PADDLE_W),
- .PADDLE_H  (PADDLE_H),
- .COLOR     (COLOR_PAD)
-  
-)
-
+paddle #( 
+    .VTOP      (VRES - PADDLE_H),
+    .HRES      (HRES),
+    .VRES      (VRES),
+    .PADDLE_W  (PADDLE_W),
+    .PADDLE_H  (PADDLE_H),
+    .COLOR     (COLOR_PAD)
+    
+    )
 paddle_inst_p1
-
-
     (
        .pixel_clk   (pixel_clk),
        .rst         (rst || game_over),
@@ -175,19 +172,16 @@ paddle_inst_p1
         
     );
 
-    paddle #( 
-
- .HRES      (HRES),
- .VRES      (VRES),
- .PADDLE_W  (PADDLE_W),
- .PADDLE_H  (PADDLE_H),
- .COLOR     (COLOR_PAD)
-  
-)
-     
+paddle #( 
+    .VTOP      (0),
+    .HRES      (HRES),
+    .VRES      (VRES),
+    .PADDLE_W  (PADDLE_W),
+    .PADDLE_H  (PADDLE_H),
+    .COLOR     (COLOR_PAD)
+    
+    )
 paddle_inst_p2
-
-
     (
        .pixel_clk   (pixel_clk),
        .rst         (rst || game_over),
@@ -201,8 +195,7 @@ paddle_inst_p2
        
        .pixel       (pixel_paddle_p2) , 
        .active      (active_paddle_p2)
-        
-        
+
     );
       
   
