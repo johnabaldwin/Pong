@@ -54,7 +54,7 @@ parameter PADDLE_H = 20
     localparam [1:0] UP_LEFT    = 2'b11;
     
     // Velocity of ball, 12 pixels per clock cycle
-    localparam VEL = 12; 
+    localparam VEL = 5; 
     
     // Ball location in horizontal/vertical format
     reg signed [11 : 0  ] lhpos; // left horizontal position 
@@ -113,8 +113,12 @@ parameter PADDLE_H = 20
     always @(posedge pixel_clk)     
     begin 
         if(rst) begin 
-            /* Insert values to reset here */
-            
+            // set ball to the middle of the screen
+            lhpos <= (HRES - OBJ_SIZE)/2;
+            rhpos <= (HRES + OBJ_SIZE)/2;
+            tvpos <= (VRES - OBJ_SIZE)/2;
+            bvpos <= (VRES + OBJ_SIZE)/2;
+
         end else if (fsync) begin 
            /* Insert your code for calculating whether the ball is still within bounds */
            /* Then update */ 

@@ -262,14 +262,14 @@ paddle_inst_p2
             
             if(~evaluate) begin 
                 if(fsync) begin 
-                       evaluate <= 1'b1; 
+                       evaluate <= 1'b1;        // once each fsync, evaluate if the game is over or not.
                 end;
                 pause                   <= 0;
                 active_passing          <= 1'b0; 
             
             end else begin 
                 if(~game_over_eval) begin 
-                    if(vpos == VRES - PADDLE_H && active_obj) begin 
+                    if(vpos == VRES - PADDLE_H && active_obj) begin         // if were near the bottom of the screen AND the ball is here
                          active_passing          <= 1'b1; 
                          if (active_paddle_p1 || active_paddle_p2) begin 
                                evaluate                <= 1'b0;
