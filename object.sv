@@ -164,13 +164,13 @@ parameter PADDLE_H = 20
                 
                 end else if ((bvpos + VEL) <= VRES - PADDLE_H) begin
                     lhpos <= 0;
-                    rhpos <= 0;
+                    rhpos <= OBJ_SIZE;
                     tvpos <= tvpos + VEL;
                     bvpos <= bvpos + VEL;
                 
                 end else begin
                     lhpos <= 0;
-                    rhpos <= 0;
+                    rhpos <= OBJ_SIZE;
                     tvpos <= tvpos + (VRES - PADDLE_H - bvpos);
                     bvpos <= bvpos + (VRES - PADDLE_H - bvpos);
                 

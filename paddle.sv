@@ -98,8 +98,10 @@ begin
         
         lhpos <= 0;
         rhpos <= 0 + PADDLE_W;
-        tvpos <= VRES; 
-        bvpos <= VRES + PADDLE_H;
+        // tvpos <= VRES; 
+        // bvpos <= VRES + PADDLE_H;
+        tvpos <= VRES - PADDLE_H; 
+        bvpos <= VRES;
         
     end else begin 
         if (fsync) begin
