@@ -78,16 +78,16 @@ module top (
     wire [7:0] pixel_gameover [0:2]; 
     
     /* Add Scoreboard Instantiation Here */
-    // scoreboard scoreboard_inst(
-    //     .pixel_clk (pixel_clk),
-    //     .rst(rst),
-    //     .fsync(fsync), 
-    //     .hpos(hpos), 
-    //     .vpos(vpos), 
-    //     .increment_score('{'0, '0}),
-    //     .pixel(pixel_scoreboard),  
-    //     .active (active_scoreboard)
-    // );
+    scoreboard scoreboard_inst(
+        .pixel_clk (pixel_clk),
+        .rst(rst),
+        .fsync(fsync), 
+        .hpos(hpos), 
+        .vpos(vpos), 
+        .increment_score('{'0, '0}),
+        .pixel(pixel_scoreboard),  
+        .active (active_scoreboard)
+    );
     /* Add Top Paddle Instantiation Here */
     
     

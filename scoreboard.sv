@@ -42,12 +42,12 @@ module digit_decoder
             4'h9    : actives[i] = within_print_range[i] 
                 && ~(hpos >= OFFSET[i][0] + 20 && hpos < OFFSET[i][0] + 40 && vpos >= OFFSET[i][1] + 20 && vpos < OFFSET[i][1] + 40)
                 && ~(hpos < OFFSET[i][0] + 40 && vpos >= OFFSET[i][1] + 60 && vpos < OFFSET[i][1] + 80); 
-            default : actives[i] = (hpos < 500) ? 1'b1 : 1'b0;
+            default : actives[i] = (hpos < 500);
         endcase
       end
    end
 
-   assign active = actives[0] || actives[1];
+   assign active = |actives;
 endmodule // priority_encoder_4in_case3
 
 module scoreboard #( 
