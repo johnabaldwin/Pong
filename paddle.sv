@@ -1,8 +1,8 @@
 module paddle #( 
 
+parameter VTOP = 0,
 parameter HRES = 1280,
 parameter VRES = 720,
-
 
 parameter PADDLE_W = 200,
 parameter PADDLE_H = 20,
@@ -33,9 +33,9 @@ parameter COLOR = 24'h EFE62E
     localparam VEL = 16; 
     
     /* NOTE: Put means the paddle is not moving */
-    localparam PUT = 2'h00;
-    localparam LEFT = 2'h01;
-    localparam RIGHT = 2'h10;
+    localparam PUT = 2'b00;
+    localparam LEFT = 2'b01;
+    localparam RIGHT = 2'b10;
     
     
     reg [0 : 2] right_ff  , left_ff ; 
@@ -98,11 +98,15 @@ begin
         
         lhpos <= 0;
         rhpos <= 0 + PADDLE_W;
-        tvpos <= VRES; 
-        bvpos <= VRES + PADDLE_H;
+        // tvpos <= VRES; 
+        // bvpos <= VRES + PADDLE_H;
+        tvpos <= VTOP; 
+        bvpos <= VTOP + PADDLE_H;
         
     end else begin 
         if (fsync) begin
+            lhpos <= lhpos; 
+            rhpos <= rhpos; 
         /* The below code should only consider directions LEFT and RIGHT. Base this code off the code in Object.sv */
          /* The first paddle should be located at the top of the screen */
             if (dir == RIGHT && rhpos < HRES) begin 

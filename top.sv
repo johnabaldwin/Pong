@@ -78,16 +78,16 @@ module top (
     wire [7:0] pixel_gameover [0:2]; 
     
     /* Add Scoreboard Instantiation Here */
-    // scoreboard scoreboard_inst(
-    //     .pixel_clk (pixel_clk),
-    //     .rst(rst),
-    //     .fsync(fsync), 
-    //     .hpos(hpos), 
-    //     .vpos(vpos), 
-    //     .increment_score('{'0, '0}),
-    //     .pixel(pixel_scoreboard),  
-    //     .active (active_scoreboard)
-    // );
+    scoreboard scoreboard_inst(
+        .pixel_clk (pixel_clk),
+        .rst(rst),
+        .fsync(fsync), 
+        .hpos(hpos), 
+        .vpos(vpos), 
+        .increment_score('{'0, '0}),
+        .pixel(pixel_scoreboard),  
+        .active (active_scoreboard)
+    );
     /* Add Top Paddle Instantiation Here */
     
     
@@ -145,19 +145,16 @@ object_inst
      
       
         
-         paddle #( 
-
- .HRES      (HRES),
- .VRES      (VRES),
- .PADDLE_W  (PADDLE_W),
- .PADDLE_H  (PADDLE_H),
- .COLOR     (COLOR_PAD)
-  
-)
-
+paddle #( 
+    .VTOP      (VRES - PADDLE_H),
+    .HRES      (HRES),
+    .VRES      (VRES),
+    .PADDLE_W  (PADDLE_W),
+    .PADDLE_H  (PADDLE_H),
+    .COLOR     (COLOR_PAD)
+    
+    )
 paddle_inst_p1
-
-
     (
        .pixel_clk   (pixel_clk),
        .rst         (rst || game_over),
@@ -175,19 +172,16 @@ paddle_inst_p1
         
     );
 
-    paddle #( 
-
- .HRES      (0),
- .VRES      (VRES),
- .PADDLE_W  (PADDLE_W),
- .PADDLE_H  (PADDLE_H),
- .COLOR     (COLOR_PAD)
-  
-)
-     
+paddle #( 
+    .VTOP      (0),
+    .HRES      (HRES),
+    .VRES      (VRES),
+    .PADDLE_W  (PADDLE_W),
+    .PADDLE_H  (PADDLE_H),
+    .COLOR     (COLOR_PAD)
+    
+    )
 paddle_inst_p2
-
-
     (
        .pixel_clk   (pixel_clk),
        .rst         (rst || game_over),
@@ -201,8 +195,7 @@ paddle_inst_p2
        
        .pixel       (pixel_paddle_p2) , 
        .active      (active_paddle_p2)
-        
-        
+
     );
       
   
@@ -262,14 +255,14 @@ paddle_inst_p2
             
             if(~evaluate) begin 
                 if(fsync) begin 
-                       evaluate <= 1'b1; 
+                       evaluate <= 1'b1;        // once each fsync, evaluate if the game is over or not.
                 end;
                 pause                   <= 0;
                 active_passing          <= 1'b0; 
             
             end else begin 
                 if(~game_over_eval) begin 
-                    if(vpos == VRES - PADDLE_H && active_obj) begin 
+                    if(vpos == VRES - PADDLE_H && active_obj) begin         // if were near the bottom of the screen AND the ball is here
                          active_passing          <= 1'b1; 
                          if (active_paddle_p1 || active_paddle_p2) begin 
                                evaluate                <= 1'b0;

@@ -54,7 +54,7 @@ parameter PADDLE_H = 20
     localparam [1:0] UP_LEFT    = 2'b11;
     
     // Velocity of ball, 12 pixels per clock cycle
-    localparam VEL = 12; 
+    localparam VEL = 5; 
     
     // Ball location in horizontal/vertical format
     reg signed [11 : 0  ] lhpos; // left horizontal position 
@@ -74,33 +74,33 @@ parameter PADDLE_H = 20
             /* Insert your code for calculating the direction of the ball when it hits a wall here */
                                /* DOWN_LEFT, DOWN_RIGHT, UP_LEFT, UP_RIGHT */
             if(dir == DOWN_RIGHT) begin 
-                if (bvpos == VRES - PADDLE_H) begin 
+                if (bvpos >= VRES - PADDLE_H) begin 
                     dir <= UP_RIGHT; 
-                end else if (rhpos == HRES - 1) begin 
+                end else if (rhpos >= HRES - 1) begin 
                     dir <= DOWN_LEFT;
                 end 
             end 
 
             if(dir == DOWN_LEFT) begin
-                if (bvpos == VRES - PADDLE_H) begin
+                if (bvpos >= VRES - PADDLE_H) begin
                     dir <= UP_LEFT;
-                end else if (lhpos == 0) begin
+                end else if (lhpos <= 0) begin
                     dir <= DOWN_RIGHT;
                 end
             end
 
             if(dir == UP_RIGHT) begin 
-                if (tvpos == PADDLE_H) begin 
+                if (tvpos <= PADDLE_H) begin 
                     dir <= DOWN_RIGHT; 
-                end else if (rhpos == HRES - 1) begin 
+                end else if (rhpos >= HRES - 1) begin 
                     dir <= UP_LEFT;
                 end 
             end 
             
             if(dir == UP_LEFT) begin 
-                if (tvpos == PADDLE_H) begin 
+                if (tvpos <= PADDLE_H) begin 
                     dir <= DOWN_LEFT; 
-                end else if (lhpos == 0) begin 
+                end else if (lhpos <= 0) begin 
                     dir <= UP_RIGHT;
                 end 
             end            
@@ -113,112 +113,38 @@ parameter PADDLE_H = 20
     always @(posedge pixel_clk)     
     begin 
         if(rst) begin 
-            /* Insert values to reset here */
-            
+            // set ball to the middle of the screen
+            lhpos <= (HRES - OBJ_SIZE)/2;
+            rhpos <= (HRES + OBJ_SIZE)/2;
+            tvpos <= (VRES - OBJ_SIZE)/2;
+            bvpos <= (VRES + OBJ_SIZE)/2;
+
         end else if (fsync) begin 
            /* Insert your code for calculating whether the ball is still within bounds */
            /* Then update */ 
 
             // Example Code
             if  (dir == DOWN_RIGHT) begin // Check if new ball location is still within bounds 
-                if ((rhpos + VEL) <= HRES  - 1 && (bvpos + VEL) <= VRES - PADDLE_H) begin 
                     lhpos <= lhpos + VEL; 
                     rhpos <= rhpos + VEL; 
                     tvpos <= tvpos + VEL; 
-                    bvpos <= bvpos + VEL; 
-                
-                end else if ((rhpos + VEL) <= HRES - 1) begin // if dist to bottom edge < VEL
-                    lhpos <= lhpos + VEL;
-                    rhpos <= rhpos + VEL;
-                    tvpos <= tvpos + (VRES - PADDLE_H - bvpos);
-                    bvpos <= bvpos + (VRES - PADDLE_H - bvpos);
-
-                end else if ((bvpos + VEL) <= VRES - PADDLE_H) begin // if dist to rh edge < VEL
-                    lhpos <= lhpos + (HRES - 1 - rhpos);
-                    rhpos <= rhpos + (HRES - 1 - rhpos);
-                    tvpos <= tvpos + VEL; 
-                    bvpos <= bvpos + VEL;
-
-                end else begin // if dist to both bottom edge and rh edge < VEL
-                    lhpos <= lhpos + (HRES - 1 - rhpos);
-                    rhpos <= rhpos + (HRES - 1 - rhpos);                    
-                    tvpos <= tvpos + (VRES - PADDLE_H - bvpos);
-                    bvpos <= bvpos + (VRES - PADDLE_H - bvpos);
-                end              
+                    bvpos <= bvpos + VEL;     
             end else if (dir == DOWN_LEFT) begin
-                if ((lhpos - VEL) >= 0 && (bvpos + VEL) <= VRES - PADDLE_H) begin
                     lhpos <= lhpos - VEL;
                     rhpos <= rhpos - VEL;
                     tvpos <= tvpos + VEL;
                     bvpos <= bvpos + VEL;
-
-                end else if ((lhpos - VEL) >= 0) begin
-                    lhpos <= lhpos - VEL;
-                    rhpos <= rhpos - VEL;
-                    tvpos <= tvpos + (VRES - PADDLE_H - bvpos);
-                    bvpos <= bvpos + (VRES - PADDLE_H - bvpos);
-                
-                end else if ((bvpos + VEL) <= VRES - PADDLE_H) begin
-                    lhpos <= 0;
-                    rhpos <= 0;
-                    tvpos <= tvpos + VEL;
-                    bvpos <= bvpos + VEL;
-                
-                end else begin
-                    lhpos <= 0;
-                    rhpos <= 0;
-                    tvpos <= tvpos + (VRES - PADDLE_H - bvpos);
-                    bvpos <= bvpos + (VRES - PADDLE_H - bvpos);
-                
-                end
             end else if (dir == UP_RIGHT) begin
-                if ((rhpos + VEL) <= HRES - 1 && (tvpos - VEL) >= PADDLE_H) begin
                     lhpos <= lhpos + VEL; 
                     rhpos <= rhpos + VEL; 
                     tvpos <= tvpos - VEL; 
                     bvpos <= bvpos - VEL;
-                end else if ((rhpos + VEL) <= HRES - 1) begin
-                    lhpos <= lhpos + VEL;
-                    rhpos <= rhpos + VEL;
-                    tvpos <= tvpos - (tvpos - PADDLE_H);
-                    bvpos <= bvpos - (tvpos - PADDLE_H);
-                end else if ((tvpos - VEL) >= PADDLE_H) begin
-                    lhpos <= lhpos + (HRES - 1 - rhpos);
-                    rhpos <= rhpos + (HRES - 1 - rhpos);
-                    tvpos <= tvpos - VEL; 
-                    bvpos <= bvpos - VEL;
-                end else begin
-                    lhpos <= lhpos + (HRES - 1 - rhpos);
-                    rhpos <= rhpos + (HRES - 1 - rhpos);
-                    tvpos <= tvpos - (tvpos - PADDLE_H);
-                    bvpos <= bvpos - (tvpos - PADDLE_H);
-                end
+
             end else if (dir == UP_LEFT) begin
-                if ((lhpos - VEL) >= 0 && (tvpos - VEL) >= PADDLE_H) begin
                     lhpos <= lhpos - VEL;
                     rhpos <= rhpos - VEL;
                     tvpos <= tvpos - VEL;
                     bvpos <= bvpos - VEL;
-
-                end else if ((lhpos - VEL) >= 0) begin
-                    lhpos <= lhpos - VEL;
-                    rhpos <= rhpos - VEL;
-                    tvpos <= tvpos - (tvpos - PADDLE_H);
-                    bvpos <= bvpos - (tvpos - PADDLE_H);
-
-                end else if ((tvpos - VEL) >= PADDLE_H) begin
-                    lhpos <= 0;
-                    rhpos <= 0;
-                    tvpos <= tvpos - VEL;
-                    bvpos <= bvpos - VEL;
-
-                end else begin
-                    lhpos <= 0;
-                    rhpos <= 0;
-                    tvpos <= tvpos - (tvpos - PADDLE_H);
-                    bvpos <= bvpos - (tvpos - PADDLE_H);
-                    
-                end
             end
         end 
     end 
