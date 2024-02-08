@@ -33,9 +33,9 @@ parameter COLOR = 24'h EFE62E
     localparam VEL = 16; 
     
     /* NOTE: Put means the paddle is not moving */
-    localparam PUT = 2'h00;
-    localparam LEFT = 2'h01;
-    localparam RIGHT = 2'h10;
+    localparam PUT = 2'b00;
+    localparam LEFT = 2'b01;
+    localparam RIGHT = 2'b10;
     
     
     reg [0 : 2] right_ff  , left_ff ; 
