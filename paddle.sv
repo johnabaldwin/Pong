@@ -105,6 +105,8 @@ begin
         
     end else begin 
         if (fsync) begin
+            lhpos <= lhpos; 
+            rhpos <= rhpos; 
         /* The below code should only consider directions LEFT and RIGHT. Base this code off the code in Object.sv */
          /* The first paddle should be located at the top of the screen */
             if (dir == RIGHT && rhpos < HRES) begin 
