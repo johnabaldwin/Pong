@@ -54,6 +54,8 @@ module top (
 
     wire active_scoreboard;
     wire [7 : 0 ] pixel_scoreboard [0:2];
+    wire increment_score[1:0];
+    reg increment_score_s[1:0];
     
     
     reg active_passing; 
@@ -69,6 +71,9 @@ module top (
     reg game_over_eval, evaluate; 
     reg game_over; 
     reg [7 : 0 ] pause; 
+
+    //Adding Point logic
+    reg player_won;
     
     
     wire [HRES-1 : 0] bitmap; 
@@ -84,7 +89,7 @@ module top (
         .fsync(fsync), 
         .hpos(hpos), 
         .vpos(vpos), 
-        .increment_score('{'0, '0}),
+        .increment_score(increment_score),
         .pixel(pixel_scoreboard),  
         .active (active_scoreboard)
     );
@@ -232,6 +237,7 @@ paddle_inst_p2
        assign led_kawser = 1; 
      
      // We need to detect gameover 
+     assign increment_score = increment_score_s;
      
      
      always @(posedge pixel_clk)
@@ -262,10 +268,20 @@ paddle_inst_p2
             
             end else begin 
                 if(~game_over_eval) begin 
-                    if(vpos == VRES - PADDLE_H && active_obj) begin         // if were near the bottom of the screen AND the ball is here
-                         active_passing          <= 1'b1; 
-                         if (active_paddle_p1 || active_paddle_p2) begin 
+                    if(vpos == VRES - PADDLE_H && active_obj) begin //Player 1 Lost         // if were near the bottom of the screen AND the ball is here
+                         active_passing          <= 1'b1;
+                         if (active_paddle_p1) begin 
                                evaluate                <= 1'b0;
+                         end else begin //Score Increment
+                                increment_score_s <= '{0,1};
+                         end
+
+                    end else if (vpos == PADDLE_H && active_obj) begin  // Player 2 Lost
+                        active_passing          <= 1'b1; 
+                         if (active_paddle_p2) begin 
+                               evaluate                <= 1'b0;
+                         end else begin //Score Increment
+                                increment_score_s <= '{1,0};
                          end
                     
                     end else if (active_passing) begin 
@@ -273,7 +289,8 @@ paddle_inst_p2
                               game_over_eval          <= 1'b1; 
                         end
                     end
-                end else if (fsync) begin 
+                end else if (fsync) begin
+                    increment_score_s <= '{0,0}; //Reset one cycle later
                     if(pause == RESTART_PAUSE) begin
                         game_over_eval          <= 1'b0;
                         evaluate                <= 1'b0; 
@@ -281,6 +298,7 @@ paddle_inst_p2
                     end else begin 
                         pause                   <= pause + 1; 
                         game_over               <= 1'b1; 
+                        //Add points to winner
                     
                     end
                 
